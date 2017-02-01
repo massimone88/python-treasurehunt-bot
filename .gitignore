@@ -1,0 +1,4 @@
+.idea/
+config.json
+known_users.txt
+*.pyc
