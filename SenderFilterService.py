@@ -1,4 +1,4 @@
-__author__ = 'stefano'
+__author__ = 'massimone88'
 from UserNotAuthorizedException import *
 
 

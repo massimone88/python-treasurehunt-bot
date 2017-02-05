@@ -1,6 +1,7 @@
 import logging
+import time
 from State import *
-__author__ = 'stefano'
+__author__ = 'massimone88'
 
 class StateManager:
 
@@ -14,21 +15,44 @@ class StateManager:
         self._current_state = None
         self._current_state_index = 0
         self.bot = bot
-        self.send_text(config["start_game_msg"])
-        self.next_state()
+        self._init_game()
+
+    def is_ready(self):
+        return self.ready
+
+    def _init_game(self):
+        self.ready = False
+        help_button = telegram.KeyboardButton(text="Start the game")
+        custom_keyboard = [[help_button]]
+        reply_markup = telegram.ReplyKeyboardMarkup(custom_keyboard)
+        self.send_keyboard(text=self.config["start_game_msg"], reply_markup=reply_markup)
 
     def _create_states(self, state_dicts):
         for state_config in state_dicts:
             state = TreasureHuntState(self, state_config)
             self._states.append(state)
 
-    def text_handler(self, bot, update):
-        chat_id = update.message.chat_id
-        if chat_id == self.chat_id and self._current_state.enable_text:
-            self._current_state.text_handler(bot, update)
+    def text_handler(self, chat_id, msg):
+        if msg == "Start the game":
+            self.ready = True
+            self.send_keyboard(text="Ok", reply_markup=telegram.ReplyKeyboardRemove())
+            self.next_state()
+        if self.is_ready() and chat_id == self.chat_id and self._current_state.text_enabled:
+            self._current_state.text_handler(msg)
+
+    def help_handler(self, chat_id):
+        if self.is_ready() and chat_id == self.chat_id:
+            self._current_state.help_handler()
+
+    def location_handler(self, chat_id, location):
+        if self.is_ready() and chat_id == self.chat_id and self._current_state.position_enabled:
+            self._current_state.location_handler(location)
 
     def send_text(self, text):
-        self.bot.sendMessage(chat_id=self.chat_id, text=text)
+        self.bot.sendMessage(chat_id=self.chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
+
+    def send_keyboard(self, text, reply_markup):
+        self.bot.sendMessage(chat_id=self.chat_id, text=text, reply_markup=reply_markup)
 
     def next_state(self):
         if self._current_state:

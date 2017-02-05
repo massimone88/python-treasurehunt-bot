@@ -34,7 +34,7 @@ Create config files with the following schema
           "position_enabled": {
             "type": "boolean"
           },
-          "enable_text": {
+          "text_enabled": {
             "type": "boolean"
           },
           "question": {
@@ -54,7 +54,7 @@ Create config files with the following schema
           "init_msg",
           "help_msg",
           "position_enabled",
-          "enable_text",
+          "text_enabled",
           "question",
           "answer",
           "right_answer_reply",

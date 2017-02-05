@@ -1,5 +1,4 @@
-__author__ = 'stefano'
-
+__author__ = 'massimone88'
 
 class UserNotAuthorizedException:
     def __init__(self, sender_id):

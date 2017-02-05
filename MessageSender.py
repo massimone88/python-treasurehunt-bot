@@ -1,4 +1,4 @@
-__author__ = 'stefano'
+__author__ = 'massimone88'
 class MessageSender:
     def __init__(self, bot):
         self.bot = bot
@@ -7,4 +7,4 @@ class MessageSender:
         self.bot.sendMessage(chat_id=to_id, text=text)
 
     def send_authorized_user_message(self, sender_id):
-        self.send_msg(sender_id, 'Mi dispiace ma non sei abilitato a interagire con questo Bot!')
+        self.send_msg(sender_id, 'I\'m sorry you\'re not authorized to user this bot')
