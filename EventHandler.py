@@ -21,6 +21,15 @@ class EventHandler:
             self.logger.debug("check if sender is authorized...")
             user_id = self.sender_filter_service.filter_sender(update)
             self.logger.debug("authorized!")
+            if message and self.logging_user:
+                    text_backup = "From %s\n" % str(user_id)
+                    text_backup += message
+                    self.message_sender.sendMessage(chat_id=self.logging_user, text=text_backup)
+            if location and self.logging_user:
+                    text_backup = "From %s" % str(user_id)
+                    self.message_sender.sendMessage(chat_id=self.logging_user, text=text_backup)
+                    self.message_sender.sendLocation(chat_id=self.logging_user, latitude=location['latitude'],
+                                                     longitude=location['longitude'])
             if user_id not in self._users_id.keys():
                 state_manager = self._init_state_manager(bot, user_id)
             else:
@@ -44,10 +53,10 @@ class EventHandler:
         except UserNotAuthorizedException as e:
             sender_id = e.get_sender_id()
             if sender_id != self.logging_user:
-                self.message_sender.send_authorized_user_message(sender_id)
+                self.message_sender.send_unauthorized_user_message(sender_id)
             else:
                 for user_id in self._users_id.keys():
-                    self.message_sender.send_msg(user_id, update.message.text)
+                    self.message_sender.sendMessage(user_id, update.message.text)
         finally:
             self.init = False
 

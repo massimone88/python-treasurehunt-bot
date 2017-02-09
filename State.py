@@ -84,4 +84,5 @@ class TreasureHuntState:
         return distance_km * 1000
 
     def on_exit(self):
-        self._state_manager.send_keyboard(text=self.on_exit_reply, reply_markup=telegram.ReplyKeyboardRemove())
+        if self.on_exit_reply:
+            self._state_manager.send_keyboard(text=self.on_exit_reply, reply_markup=telegram.ReplyKeyboardRemove())

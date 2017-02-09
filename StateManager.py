@@ -60,6 +60,8 @@ class StateManager:
             self._current_state_index += 1
         else:
             self._current_state_index = 0
+        self.message_sender.sendChatAction(chat_id=self.chat_id, action=telegram.ChatAction.TYPING)
+        time.sleep(0.5)
         if self._current_state_index < len(self._states):
             self._current_state = self._states[self._current_state_index]
             self._current_state.on_enter()

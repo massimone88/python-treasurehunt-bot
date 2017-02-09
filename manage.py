@@ -15,12 +15,13 @@ def main_loop():
     json_data = open("config.json").read()
     config = json.loads(json_data)
     bot = telegram.Bot(token=config["TOKEN_BOT"])
+    logging_user = config['logging_user'] if 'logging_user' in config.keys() else None
     updater = Updater(bot=bot)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
     sender_filter = SenderFilterService()
-    message_sender = MessageSender(bot)
-    event_handler = EventHandler(sender_filter, message_sender, config)
+    message_sender = MessageSender(bot, config, logging_user=logging_user)
+    event_handler = EventHandler(sender_filter, message_sender, config, logging_user=logging_user)
     all_handler = MessageHandler(Filters.all, event_handler.handle_all)
     dispatcher.add_handler(all_handler)
     print 'waiting new messages...'
