@@ -1,0 +1,7 @@
+{
+  "name": "ThreasureHunt Telegram Bot",
+  "description": "A treasure hunt telegram bot written in python.",
+  "image": "heroku/python",
+  "repository": "https://github.com/massimone88/python-treasurehunt-bot.git",
+  "keywords": ["python", "telegram", "bot", "treasure", "hunt" ]
+}
