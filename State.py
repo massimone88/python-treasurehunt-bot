@@ -1,9 +1,7 @@
+__author__ = 'massimone88'
+import logging
 import telegram
 from Util import ThreasureHuntUtil
-import logging
-
-__author__ = 'massimone88'
-
 
 class TreasureHuntState:
     def __init__(self, state_manager, config):

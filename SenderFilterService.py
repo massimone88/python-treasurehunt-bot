@@ -1,7 +1,6 @@
 __author__ = 'massimone88'
 from UserNotAuthorizedException import *
 
-
 class SenderFilterService:
 
     def __init__(self):

@@ -1,11 +1,11 @@
+__author__ = 'massimone88'
 import logging
 import time
 from State import *
-__author__ = 'massimone88'
 
 class StateManager:
 
-    def __init__(self, bot, chat_id, config):
+    def __init__(self, message_sender, chat_id, config):
         self.logger = logging.getLogger()
         self.logger.debug("init State Manager")
         self.chat_id = chat_id
@@ -14,7 +14,7 @@ class StateManager:
         self._create_states(config["states"])
         self._current_state = None
         self._current_state_index = 0
-        self.bot = bot
+        self.message_sender = message_sender
         self._init_game()
 
     def is_ready(self):
@@ -49,10 +49,10 @@ class StateManager:
             self._current_state.location_handler(location)
 
     def send_text(self, text):
-        self.bot.sendMessage(chat_id=self.chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
+        self.message_sender.sendMessage(chat_id=self.chat_id, text=text, parse_mode=telegram.ParseMode.MARKDOWN)
 
     def send_keyboard(self, text, reply_markup):
-        self.bot.sendMessage(chat_id=self.chat_id, text=text, reply_markup=reply_markup)
+        self.message_sender.sendMessage(chat_id=self.chat_id, text=text, reply_markup=reply_markup)
 
     def next_state(self):
         if self._current_state:
