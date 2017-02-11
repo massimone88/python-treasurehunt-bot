@@ -19,7 +19,7 @@ def main_loop():
     updater = Updater(bot=bot)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
-    sender_filter = SenderFilterService()
+    sender_filter = SenderFilterService(config)
     message_sender = MessageSender(bot, config, logging_user=logging_user)
     event_handler = EventHandler(sender_filter, message_sender, config, logging_user=logging_user)
     all_handler = MessageHandler(Filters.all, event_handler.handle_all)

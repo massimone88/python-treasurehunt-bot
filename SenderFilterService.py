@@ -3,13 +3,8 @@ from UserNotAuthorizedException import *
 
 class SenderFilterService:
 
-    def __init__(self):
-        self.authorized_users = []
-        for line in open("known_users.txt"):
-            li = line.strip()
-            if not li.startswith("#"):
-                user_id = int(line.rstrip())
-                self.authorized_users.append(user_id)
+    def __init__(self, config):
+        self.authorized_users = config["authorized_users"]
 
     def filter_sender(self, update):
         sender_id = update.message.chat_id
