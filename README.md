@@ -1,3 +1,10 @@
+# Python Threasure Hung Bot
+
+A treasure hunt telegram bot written in python
+
+![Image of Yaktocat](https://github.com/massimone88/python-treasurehunt-bot/blob/master/image.png)
+
+
 # Instructions
 
 ## 1. Install dependencies.
