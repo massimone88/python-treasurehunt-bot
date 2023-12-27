@@ -8,10 +8,11 @@ class SenderFilterService:
 
     def filter_sender(self, update):
         sender_id = update.message.chat_id
-        print 'sender %d' % sender_id
+        print('sender %d' % sender_id)
         found = False
-        if sender_id in self.authorized_users:
-            found = True
-        if not found:
-            raise UserNotAuthorizedException(sender_id)
+        if len(self.authorized_users) > 0:
+            if sender_id in self.authorized_users:
+                found = True
+            if not found:
+                raise UserNotAuthorizedException(sender_id)
         return sender_id
